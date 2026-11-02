@@ -1,0 +1,15 @@
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: barber-booking-bbdd
+    environment:
+      POSTGRES_DB: barber-booking-db
+      POSTGRES_USER: barber-booking-user
+      POSTGRES_PASSWORD: barber-booking-pssw
+    ports:
+      - "5433:5432"
+    volumes:
+      - barber_booking_bbdd_data:/var/lib/postgresql/data
+
+volumes:
+  barber_booking_bbdd_data:
