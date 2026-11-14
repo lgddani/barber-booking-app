@@ -46,6 +46,10 @@ public class AuthService {
             throw new InvalidCredentialsException();
         }
 
+        if (!user.isEnabled()) {
+            throw new InvalidCredentialsException();
+        }
+
         return toResponse(user);
     }
 
