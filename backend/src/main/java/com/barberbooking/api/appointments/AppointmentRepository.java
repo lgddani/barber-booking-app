@@ -23,4 +23,19 @@ public interface AppointmentRepository extends JpaRepository<Appointment, UUID> 
             @Param("to") Instant to,
             @Param("excludedStatuses") Collection<AppointmentStatus> excludedStatuses
     );
+
+    //consulta de solapamiento filtrada por clientr
+    @Query("""
+        SELECT a FROM Appointment a
+        WHERE a.customerId = :customerId
+          AND a.status NOT IN :excludedStatuses
+          AND a.startAt < :to
+          AND a.endAt > :from
+        """)
+    List<Appointment> findActiveForCustomerInRange(
+            @Param("customerId") UUID customerId,
+            @Param("from") Instant from,
+            @Param("to") Instant to,
+            @Param("excludedStatuses") Collection<AppointmentStatus> excludedStatuses
+    );
 }
